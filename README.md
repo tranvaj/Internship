@@ -24,7 +24,9 @@ All 30 examples are saved in corresponding .json file as a list of dictionaries 
 Using HF transformers library I can easily initialize the "tiny_starcoder" model.
 All the input texts are formatted in this way (with the given special tokens):
 
-´´´"<fim_prefix>{prefix}<fim_suffix>{suffix}<fim_middle>"´´´
+```
+"<fim_prefix>{prefix}<fim_suffix>{suffix}<fim_middle>"
+```
 
 Where the prediction is generated after <fim_middle> token.
 
