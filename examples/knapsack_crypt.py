@@ -14,10 +14,8 @@ class KnapsackAlg:
         self.key_len = 250
         self.w_max = 400
         self.w_min = 200
-        #self.q_min = 5
         
     def encrypt(self, input_bytes, pub_key):
-        #0 padding
         bin_bytes = bytes2binstr(input_bytes)
         padded_bits = self.get_padding_bits_needed(bin_bytes)
 
@@ -27,14 +25,12 @@ class KnapsackAlg:
         for block in blocks:
             cipher = 0
             for i in range(len(block)):
-                #print(block[i])
                 cipher += pub_key[i] * int(block[i])
             cipher_blocks.append(cipher)
         return cipher_blocks, padded_bits
     
     def decipher(self, cipher_blocks, priv_key, p, q, padded_bits):
         p_inverse = pow(p, -1, q)
-        #print(cipher_blocks)
         messages = []
         for cipher in cipher_blocks:
             deciphered = (cipher * p_inverse) % q
@@ -44,9 +40,7 @@ class KnapsackAlg:
                     deciphered = deciphered - x
                     msg[-i-1] = '1'
             messages.append(''.join(msg))
-        #print(''.join(messages))
         padding_removed = ''.join(messages)[:-padded_bits]
-        #print(padding_removed)
         deciphered_message = self.bitstring_to_bytes(''.join(padding_removed))
         return deciphered_message
 
@@ -105,9 +99,6 @@ class KnapsackAlg:
         while not self.co_prime(p,q):
             p = random.randint(0,q)
 
-        #self.p = p
-        #self.q = q
-        #self.priv_key = priv_key
         return p, q, priv_key
 
     def gen_w(self) -> int:
@@ -148,9 +139,3 @@ def is_superincreasing(sequence):
         sum_preceding += sequence[i]
     
     return True  # Sequence is superincreasing
-
-#k = KnapsackAlg()
-#params = k.gen_p_q_seq()
-#print(is_superincreasing(params[2]))
-#print(int.bit_length(params[0]), int.bit_length(params[1]))
-#print(int.bit_length(sum(params)), 2**250)

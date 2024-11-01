@@ -1,6 +1,5 @@
 import json
 from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
 
 model_name = "bigcode/tiny_starcoder_py"
 device = "cuda"
@@ -45,6 +44,5 @@ for example in dataset:
         "correct": ""
     })
 
-# to json
 with open("code_completion_results.json", "w") as f:
     json.dump(results, f, indent=4)

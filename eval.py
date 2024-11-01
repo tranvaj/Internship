@@ -1,12 +1,11 @@
 import json
 from nltk.translate.bleu_score import sentence_bleu
 import pandas as pd
-from sklearn.metrics import f1_score
 from nltk.translate.chrf_score import sentence_chrf
 from Levenshtein import distance as levenshtein_distance
 
 # Load the annotated results from the JSON file
-with open("code_completion_results copy 2.json", "r") as f:
+with open("code_completion_results_annotated.json", "r") as f:
     results = json.load(f)
 
 # Ensure every object has the "correct" key
@@ -20,7 +19,6 @@ for entry in results:
     entry["bleu_score"] = sentence_bleu([entry["middle"].split()], entry["fill"].split())
     entry["levenshtein"] = levenshtein_distance(entry["middle"], entry["fill"])
 
-# Save the updated results with metrics added for reference
 with open("code_completion_results_annotated_with_metrics.json", "w") as f:
     json.dump(results, f, indent=4)
 
@@ -32,7 +30,7 @@ correlations = {
     "exact_match": df["exact_match"].corr(df["correct"]),
     "chrf_score": df["chrf_score"].corr(df["correct"]),
     "bleu_score": df["bleu_score"].corr(df["correct"]),
-    "levenshtein": abs(df["levenshtein"].corr(df["correct"]))
+    "levenshtein": (df["levenshtein"].corr(df["correct"]))
 }
 
 # Display the correlation results and choose the best metric
