@@ -8,7 +8,7 @@ from Levenshtein import distance as levenshtein_distance
 with open("code_completion_results_annotated.json", "r") as f:
     results = json.load(f)
 
-# Ensure every object has the "correct" key
+# Ensure every object has the "correct" key (just to be sure)
 for entry in results:
     if "correct" not in entry:
         raise ValueError("Missing 'correct' key in entry")
@@ -22,10 +22,7 @@ for entry in results:
 with open("code_completion_results_annotated_with_metrics.json", "w") as f:
     json.dump(results, f, indent=4)
 
-# Load results into a DataFrame for correlation analysis
 df = pd.DataFrame(results)
-
-# Calculate correlations between each metric and the "correct" label
 correlations = {
     "exact_match": df["exact_match"].corr(df["correct"]),
     "chrf_score": df["chrf_score"].corr(df["correct"]),
@@ -33,7 +30,7 @@ correlations = {
     "levenshtein": (df["levenshtein"].corr(df["correct"]))
 }
 
-# Display the correlation results and choose the best metric
+# Display the correlation results and choose the "best" metric
 best_metric = max(correlations, key=correlations.get)
 print("Metric Correlations with 'correct' Label:")
 for metric, corr in correlations.items():
