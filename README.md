@@ -40,13 +40,11 @@ All 30 examples went through the prediction and were saved into an appropriate .
 - **correct** - is empty string, serves as a key that will describe if the prediction was correct or wrong (manually annotated by me)
 
 ### 3. Evaluating performance
-To evaluate performance, I used "exact match" (comparing if strings are identical), chrf, BLEU and Levenshtein distance metrics.
+To automatically evaluate performance, I used "exact match" (comparing if strings are identical), chrf, BLEU and Levenshtein distance metrics.
 
 When evaluating correlation between my manual annotations of correctness and metrics described above, I found that "exact match" metric correlated the most with my manual annotations. Chrf second most, levenshtein third most (negative correlation because the fewer edits, the higher the correctness) and BLEU the worst. Exact match metric sometimes is not ideal, because the model does give a working, accurate prediction, that is a bit different visually, but functionally the same.
 
-Due to the small amount of examples, I can not say if "exact match" is the best automatic metric for evaluation of this model. 
-
-Intuitivelly, I think that chrf_score or levenshtein distance might be the best metrics if the amount of examples were larger.
+Due to the small amount of examples, I can not say if "exact match" is the best automatic metric for evaluation of this model. Intuitively, I think that chrf_score or levenshtein distance might be the best metrics if the amount of examples was larger.
 
 
 
